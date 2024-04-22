@@ -1,0 +1,124 @@
+hyperskill_project:
+  id: 309
+  ide_files: https://cogniterra.org/media/attachments/lesson/27206/additional_files.json
+  is_template_based: false
+  use_ide: true
+update_date: "Thu, 01 Jan 1970 00:00:00 UTC"
+stages:
+  - id: 1731
+    step: 24335
+    is_completed: true
+  - id: 1732
+    step: 24336
+    is_completed: true
+  - id: 1733
+    step: 24337
+    is_completed: true
+  - id: 1734
+    step: 24338
+    is_completed: true
+topics:
+  0:
+    - title: Interface elements
+      theory_id: 15253
+    - title: Colors
+      theory_id: 14914
+    - title: Block-level elements
+      theory_id: 7271
+    - title: Inline elements
+      theory_id: 7518
+    - title: What is CSS
+      theory_id: 7678
+    - title: HTML attributes id and class
+      theory_id: 7527
+    - title: Connecting CSS to HTML
+      theory_id: 7418
+    - title: Basic syntax
+      theory_id: 7722
+    - title: CSS Selectors
+      theory_id: 7738
+    - title: Relative units
+      theory_id: 10671
+    - title: Absolute units
+      theory_id: 10605
+    - title: Introduction to Flexbox
+      theory_id: 11760
+    - title: Orientation and Display order
+      theory_id: 11768
+    - title: "Flexibility, growth and contraction ratio"
+      theory_id: 18859
+    - title: Axis alignment
+      theory_id: 11784
+    - title: DOM
+      theory_id: 8635
+    - title: Comments
+      theory_id: 7730
+    - title: Layout elements
+      theory_id: 13326
+    - title: The lang attribute
+      theory_id: 12212
+    - title: HTML basics
+      theory_id: 6434
+    - title: Tags and Attributes
+      theory_id: 7536
+    - title: HTML page structure
+      theory_id: 6491
+    - title: Comments
+      theory_id: 7502
+    - title: Position
+      theory_id: 11581
+    - title: Float
+      theory_id: 12697
+    - title: Clear
+      theory_id: 12705
+    - title: Margin and Padding
+      theory_id: 26903
+    - title: Width and Height
+      theory_id: 8325
+    - title: Border
+      theory_id: 8355
+    - title: WebStorm
+      theory_id: 36802
+    - title: RGB
+      theory_id: 8819
+    - title: Links
+      theory_id: 11834
+    - title: Colors in CSS
+      theory_id: 7973
+    - title: Background
+      theory_id: 11670
+    - title: Code style
+      theory_id: 11469
+  1:
+    - title: Fonts
+      theory_id: 15045
+    - title: Attribute selectors and Universal selector
+      theory_id: 12228
+    - title: Combinators
+      theory_id: 12236
+    - title: Google Fonts
+      theory_id: 7844
+    - title: Using Fonts
+      theory_id: 15189
+    - title: line-height
+      theory_id: 11153
+    - title: Text Alignment
+      theory_id: 11589
+    - title: Overflow
+      theory_id: 12454
+  2:
+    - title: Code style
+      theory_id: 12446
+    - title: Intro to Tables
+      theory_id: 10832
+    - title: "Rows, cells, captions"
+      theory_id: 19274
+    - title: "Tables: Merging cells"
+      theory_id: 11145
+    - title: Sizing tables
+      theory_id: 20550
+    - title: Table Alignment
+      theory_id: 20557
+  3:
+    - title: Media queries
+      theory_id: 16645

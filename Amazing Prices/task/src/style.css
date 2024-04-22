@@ -1,0 +1,75 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css');
+@import url("https://fonts.googleapis.com/css?family=Inter:500,700");
+
+* {
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+}
+
+header {
+    width: 1024px;
+    margin: 0 auto;
+    border-bottom: 1px solid rgba(1, 124, 255, 0.50);
+    /*padding: 0 .9em;*/
+    height: 61px;
+    display: flex;
+    flex-direction: row;
+    /*flex-shrink: 0;*/
+    /*align-items: center;*/
+    justify-content: space-between;
+}
+
+#nav-brand {
+    /*margin: 0 .9em;*/
+    color: #274867;
+    font-family: Inter, serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+nav {
+    display: flex;
+}
+
+nav a {
+    color: #274867;
+    font-family: Inter, sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    /*padding: .9em;*/
+}
+
+
+main {
+    width: 1024px;
+    margin: 0 auto;
+    height: 646px;
+    background: #E5F2FF;
+    display: block;
+
+}
+
+footer {
+    width: 1024px;
+    margin: 0 auto;
+    height: 61px;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-around;
+    border-top: 1px solid rgba(1, 124, 255, 0.50);
+}
