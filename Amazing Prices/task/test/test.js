@@ -26,10 +26,13 @@ class Test extends StageTest {
 
         // method to check the style of the element with id
         this.elementStyle = (id, style, value, strict=true) => {
-            const element = document.body.querySelector(id);
+            let element = id;
+            if (typeof id === "string") {
+                element = document.body.querySelector(id);
+            }
             if (!element) return true;
             let styleValue = getComputedStyle(element)[style];
-            //console.log(styleValue);
+            // console.log(styleValue);
             if (styleValue.includes('px')) {
                 const numericValue = parseFloat(styleValue);
                 styleValue = `${Math.round(numericValue)}px`;
@@ -40,8 +43,13 @@ class Test extends StageTest {
 
         // method to check if element with id has right text
         this.elementHasText = (id) => {
-            const element = document.body.querySelector(id);
+            let element = id;
+
+            if (typeof id === "string") {
+                element = document.body.querySelector(id);
+            }
             if (!element) return true;
+            // console.log(element.innerText);
 
             return !element.innerText || element.innerText.trim().length === 0;
         };
@@ -92,16 +100,22 @@ class Test extends StageTest {
                 if (this.elementStyle(id, this.borderTopStyle, style)) return true;
 
                 if (this.elementStyle(id, this.borderTopWidth, width)) return true;
+            } else if (order === "all") {
+                if (this.elementStyle(id,"border-style", style)) return true;
+
+                if (this.elementStyle(id, "border-width", width)) return true;
+
             }
         };
 
         // method to check if element with id has right parent element
-        this.elementHasParent = (id, parentId) => {
-            const parent = document.body.querySelector(parentId);
+        this.elementHasParent = (id, parentId, directParentNode=false) => {
+            let parent = parentId;
+            if (!directParentNode) parent = document.body.querySelector(parentId);
             if (!parent) return true;
             // console.log(parent.id)
             const element = parent.querySelector(id);
-            // console.log(element.id)
+            // console.log(element.className)
             return !element;
         };
 
@@ -133,6 +147,20 @@ class Test extends StageTest {
             if(getComputedStyle(element)[this.textDec] !== "none") {
                 return this.wrongTextDecorAnchorMsg(parent);
             }
+        }
+
+        this.checkCardsStyle = (id, selector) => {
+            // check border
+            if (this.checkBorder(id, "all"))
+                return this.wrongStyleMsg(selector, "border width or style");
+
+            // check text-align
+            if (this.elementStyle(id, "text-align", "center"))
+                return this.wrongStyleMsg(selector, "text-align");
+
+            // check border-radius
+            if (this.elementStyle(id, "border-radius", "10px"))
+                return this.wrongStyleMsg(selector, "border-radius");
         }
 
         // CONSTANTS-->
@@ -181,7 +209,13 @@ class Test extends StageTest {
         };
         this.wrongAnchorLength = (id, amount) => {
             return `${thePage} ${theElement} ${id} should have ${amount} anchor tags inside.`;
-        }
+        };
+        this.wrongSectionLength = (id, amount) => {
+            return `${thePage} ${theElement} ${id} should have ${amount} section tags inside.`;
+        };
+        this.wrongNumOfElements = (id, amount, extraSelector) => {
+            return `${thePage} ${theElement} ${id} should have ${amount} ${extraSelector} elements inside.`;
+        };
         // <--MESSAGES
         return correct();
 
@@ -280,6 +314,143 @@ class Test extends StageTest {
                 if ( this.elementPositionCompareX(anchors[i], anchors[i + 1]))
                     temp.push(this.wrongPositionCompareXMsg(selector(i + 1), selector(i + 2)));
             }
+            if (temp.length > 0) return wrong(temp[0]);
+
+            return correct()
+        }),
+        this.page.execute(() => {
+            // test #8
+            // STAGE2 MAIN CHILDREN
+
+            // check if sections exist
+            const sections = Array.from(document.querySelectorAll(this.main + " section"));
+            const sectionNum = 2;
+            if (sections.length !== sectionNum)
+                return wrong(this.wrongSectionLength(this.main, sectionNum));
+
+            // check h1 in section1
+            const section1 = this.main + " section:nth-child(1)";
+            const h1 = section1 + " h1";
+            if (this.elementExists(h1))
+                return wrong(this.missingIdMsg(h1));
+
+            // check h1 text align
+            if (this.elementStyle(h1, "text-align", "center"))
+                return wrong(this.wrongStyleMsg(h1, "text-align"));
+
+            // check h1 text
+            if (this.elementHasText(h1))
+                return wrong(this.wrongTextMsg(h1));
+
+            // check p in section1
+            const p = section1 + " p";
+            if (this.elementExists(p))
+                return wrong(this.missingIdMsg(p));
+
+            // check p text-align
+            if (this.elementStyle(p, "text-align", "center"))
+                return wrong(this.wrongStyleMsg(p, "text-align"));
+
+            // check p text
+            if (this.elementHasText(p))
+                return wrong(this.wrongTextMsg(p));
+
+            // check cards in section2
+            const section2 = this.main + " section:nth-child(2)";
+            const cards = Array.from(document.querySelectorAll(section2 + " .card"));
+            const cardNum = 3;
+            if (cards.length !== cardNum)
+                return wrong(this.wrongNumOfElements(section2, cardNum, ".card"));
+
+            // check cards are divs
+            const temp = [];
+            cards.forEach((card, index )=> {
+                if (card.tagName !== "DIV")
+                    temp.push(this.wrongTagMsg(`main section .card:nth-child(${index + 1})`, "div"));
+            });
+            if (temp.length > 0) return wrong(temp[0]);
+
+            // check cards style
+            cards.forEach((card, index )=> {
+                let result = this.checkCardsStyle(card, `main section .card:nth-child(${index + 1})`);
+                if (result)
+                    temp.push(result);
+            });
+            if (temp.length > 0) return wrong(temp[0]);
+
+            // check cards position
+            const selector = (n) => `${section2} .card:nth-child(${n})`;
+            for (let i = 0; i < cards.length -1; i++) {
+                if(this.elementPositionCompareX(cards[i], cards[i + 1]))
+                    temp.push(this.wrongPositionCompareXMsg(selector(i + 1), selector(i + 2)));
+            }
+            if (temp > 0) return wrong(temp[0]);
+
+            // check cards have .card-header
+            cards.forEach((card, index )=> {
+                if (this.elementHasParent(".card-header", card, true))
+                    temp.push(this.wrongParentMsg(".card-header", `.card:nth-child(${index + 1})`));
+            });
+            if (temp.length > 0) return wrong(temp[0]);
+
+            // check .card-header are div
+            const cardHeaders = Array.from(document.querySelectorAll(section2 + " .card-header"));
+            cardHeaders.forEach((cardHeader, index )=> {
+                if (cardHeader.tagName !== "DIV")
+                    temp.push(this.wrongTagMsg(`main section .card:nth-child(${index + 1}) .card-header`, "div"));
+
+                // check .card-header have h4
+                if (this.elementHasParent("h4", cardHeader, true))
+                    temp.push(this.wrongParentMsg("h4", `.card:nth-child(${index + 1}) .card-header`));
+
+                if (this.elementHasText(`main section .card:nth-child(${index + 1}) .card-header h4`))
+                    temp.push(this.wrongTextMsg(`main section .card:nth-child(${index + 1}) .card-header h4`));
+
+                // check .card-header style
+                if (this.checkBorder(cardHeader))
+                    temp.push(this.wrongStyleMsg(`main section .card:nth-child(${index + 1}) .card-header` , "border-bottom width or style"));
+            });
+            if (temp.length > 0) return wrong(temp[0]);
+
+            // check cards have .card-body
+            cards.forEach((card, index )=> {
+                if (this.elementHasParent(".card-body", card, true))
+                    temp.push(this.wrongParentMsg(".card-body", `.card:nth-child(${index + 1})`));
+            });
+            if (temp.length > 0) return wrong(temp[0]);
+
+            const cardBodies = Array.from(document.querySelectorAll(section2 + " .card-body"));
+            // check .card-body have h3
+            cardBodies.forEach((cardBody, index )=> {
+                // check .card-body are div
+                if (cardBody.tagName !== "DIV")
+                    temp.push(this.wrongTagMsg(`main section .card:nth-child(${index + 1}) .card-body`, "div"));
+
+                if (this.elementHasParent("h3", cardBody, true))
+                    temp.push(this.wrongParentMsg("h3", `.card:nth-child(${index + 1}) .card-body`));
+
+                if (this.elementHasText(`main section .card:nth-child(${index + 1}) .card-body h3`))
+                    temp.push(this.wrongTextMsg(`main section .card:nth-child(${index + 1}) .card-body h3`));
+
+                // check .card-body have 4 p
+                const p = Array.from(cardBody.querySelectorAll("p"));
+                if (p.length !== 4)
+                    temp.push(this.wrongNumOfElements(`.card:nth-child(${index + 1}) .card-body`, 4, "p"));
+
+                // check p text
+                p.forEach((p, _index) => {
+                    if (this.elementHasText(p))
+                        temp.push(this.wrongTextMsg(`main section .card:nth-child(${index + 1}) .card-body p:nth-child(${_index + 1})`));
+                });
+
+                // check .card-body have button
+                if (this.elementHasParent("button", cardBody, true))
+                    temp.push(this.wrongParentMsg("button", `.card:nth-child(${index + 1}) .card-body`));
+
+                // check button text
+                if (this.elementHasText(`main section .card:nth-child(${index + 1}) .card-body button`))
+                    temp.push(this.wrongTextMsg(`main section .card:nth-child(${index + 1}) .card-body button`));
+            });
             if (temp.length > 0) return wrong(temp[0]);
 
             return correct()

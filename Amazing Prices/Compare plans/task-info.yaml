@@ -718,6 +718,6 @@ files:
           await new Test().runTests()
       }).timeout(30000);
     learner_created: false
-feedback_link: https://hyperskill.org/projects/309/stages/1733/implement#comment
+feedback_link: https://hyperskill.org/learn/step/24337#comment
 status: Solved
 record: 2

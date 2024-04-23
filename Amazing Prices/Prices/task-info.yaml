@@ -588,6 +588,10 @@ files:
           await new Test().runTests()
       }).timeout(30000);
     learner_created: false
-feedback_link: https://hyperskill.org/projects/309/stages/1732/implement#comment
-status: Failed
+feedback_link: https://hyperskill.org/learn/step/24336#comment
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">Hyperskill</a>
+    to continue learning.
+  time: "Mon, 22 Apr 2024 07:57:50 UTC"
 record: 1
