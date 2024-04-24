@@ -25,7 +25,7 @@ class Test extends StageTest {
         };
 
         // method to check the style of the element with id
-        this.elementStyle = (id, style, value, strict=true) => {
+        this.elementStyle = (id, style, value, strict = true) => {
             let element = id;
             if (typeof id === "string") {
                 element = document.body.querySelector(id);
@@ -55,7 +55,7 @@ class Test extends StageTest {
         };
 
         // method to compare two elements position
-        this.elementPositionCompareX = (id1, id2, directNode=true) => {
+        this.elementPositionCompareX = (id1, id2, directNode = true) => {
             let element1 = id1
             let element2 = id2;
             if (!directNode) {
@@ -73,7 +73,7 @@ class Test extends StageTest {
         }
 
         // method to compare two elements position
-        this.elementPositionCompareY = (id1, id2, directNode=true) => {
+        this.elementPositionCompareY = (id1, id2, directNode = true) => {
             let element1 = id1
             let element2 = id2;
             if (!directNode) {
@@ -91,7 +91,7 @@ class Test extends StageTest {
         };
 
         // check border of the element with id
-        this.checkBorder = (id, order="bottom", width="1px", style="solid") => {
+        this.checkBorder = (id, order = "bottom", width = "1px", style = "solid") => {
             if (order === "bottom") {
                 if (this.elementStyle(id, this.borderBotStyle, style)) return true;
 
@@ -101,7 +101,7 @@ class Test extends StageTest {
 
                 if (this.elementStyle(id, this.borderTopWidth, width)) return true;
             } else if (order === "all") {
-                if (this.elementStyle(id,"border-style", style)) return true;
+                if (this.elementStyle(id, "border-style", style)) return true;
 
                 if (this.elementStyle(id, "border-width", width)) return true;
 
@@ -109,7 +109,7 @@ class Test extends StageTest {
         };
 
         // method to check if element with id has right parent element
-        this.elementHasParent = (id, parentId, directParentNode=false) => {
+        this.elementHasParent = (id, parentId, directParentNode = false) => {
             let parent = parentId;
             if (!directParentNode) parent = document.body.querySelector(parentId);
             if (!parent) return true;
@@ -140,11 +140,11 @@ class Test extends StageTest {
 
         this.checkOrderedAnchors = (element, parent) => {
             // text
-            if( !element.innerText || element.innerText.trim().length === 0)
+            if (!element.innerText || element.innerText.trim().length === 0)
                 return this.noTextAnchorMsg(parent);
 
             // text-decoration
-            if(getComputedStyle(element)[this.textDec] !== "none") {
+            if (getComputedStyle(element)[this.textDec] !== "none") {
                 return this.wrongTextDecorAnchorMsg(parent);
             }
         }
@@ -324,7 +324,7 @@ class Test extends StageTest {
 
             // check if sections exist
             const sections = Array.from(document.querySelectorAll(this.main + " section"));
-            const sectionNum = 2;
+            const sectionNum = 3;
             if (sections.length !== sectionNum)
                 return wrong(this.wrongSectionLength(this.main, sectionNum));
 
@@ -364,14 +364,14 @@ class Test extends StageTest {
 
             // check cards are divs
             const temp = [];
-            cards.forEach((card, index )=> {
+            cards.forEach((card, index) => {
                 if (card.tagName !== "DIV")
                     temp.push(this.wrongTagMsg(`main section .card:nth-child(${index + 1})`, "div"));
             });
             if (temp.length > 0) return wrong(temp[0]);
 
             // check cards style
-            cards.forEach((card, index )=> {
+            cards.forEach((card, index) => {
                 let result = this.checkCardsStyle(card, `main section .card:nth-child(${index + 1})`);
                 if (result)
                     temp.push(result);
@@ -387,7 +387,7 @@ class Test extends StageTest {
             if (temp > 0) return wrong(temp[0]);
 
             // check cards have .card-header
-            cards.forEach((card, index )=> {
+            cards.forEach((card, index) => {
                 if (this.elementHasParent(".card-header", card, true))
                     temp.push(this.wrongParentMsg(".card-header", `.card:nth-child(${index + 1})`));
             });
@@ -395,7 +395,7 @@ class Test extends StageTest {
 
             // check .card-header are div
             const cardHeaders = Array.from(document.querySelectorAll(section2 + " .card-header"));
-            cardHeaders.forEach((cardHeader, index )=> {
+            cardHeaders.forEach((cardHeader, index) => {
                 if (cardHeader.tagName !== "DIV")
                     temp.push(this.wrongTagMsg(`main section .card:nth-child(${index + 1}) .card-header`, "div"));
 
@@ -408,12 +408,12 @@ class Test extends StageTest {
 
                 // check .card-header style
                 if (this.checkBorder(cardHeader))
-                    temp.push(this.wrongStyleMsg(`main section .card:nth-child(${index + 1}) .card-header` , "border-bottom width or style"));
+                    temp.push(this.wrongStyleMsg(`main section .card:nth-child(${index + 1}) .card-header`, "border-bottom width or style"));
             });
             if (temp.length > 0) return wrong(temp[0]);
 
             // check cards have .card-body
-            cards.forEach((card, index )=> {
+            cards.forEach((card, index) => {
                 if (this.elementHasParent(".card-body", card, true))
                     temp.push(this.wrongParentMsg(".card-body", `.card:nth-child(${index + 1})`));
             });
@@ -421,7 +421,7 @@ class Test extends StageTest {
 
             const cardBodies = Array.from(document.querySelectorAll(section2 + " .card-body"));
             // check .card-body have h3
-            cardBodies.forEach((cardBody, index )=> {
+            cardBodies.forEach((cardBody, index) => {
                 // check .card-body are div
                 if (cardBody.tagName !== "DIV")
                     temp.push(this.wrongTagMsg(`main section .card:nth-child(${index + 1}) .card-body`, "div"));
@@ -454,6 +454,82 @@ class Test extends StageTest {
             if (temp.length > 0) return wrong(temp[0]);
 
             return correct()
+        }),
+        this.page.execute(() => {
+            // test #9
+            // STAGE3 SECTION3
+
+            // check h2 in section2
+            const section3 = this.main + " section:nth-child(3)";
+            const h2 = section3 + " h2";
+            if (this.elementExists(h2))
+                return wrong(this.missingIdMsg(h2));
+
+            // check h2 style
+            if (this.elementStyle(h2, "text-align", "center"))
+                return wrong(this.wrongStyleMsg(h2, "text-align"));
+
+            // check h2 text
+            if (this.elementHasText(h2))
+                return wrong(this.wrongTextMsg(h2));
+
+            // check table in section3
+            const table = section3 + " table";
+            if (this.elementExists(table))
+                return wrong(this.missingIdMsg(table));
+
+            // check thead in table
+            const thead = table + " thead";
+            if (this.elementExists(thead))
+                return wrong(this.missingIdMsg(thead));
+
+            // check tbody in table
+            const tbody = table + " tbody";
+            if (this.elementExists(tbody))
+                return wrong(this.missingIdMsg(tbody));
+
+            // check tr in thead
+            const tr = thead + " tr";
+            if (this.elementExists(tr))
+                return wrong(this.missingIdMsg(tr));
+
+            // check th in tr have at least 4
+            const ths = Array.from(document.querySelectorAll(tr + " th"));
+            if (ths.length < 4)
+                return wrong(this.wrongNumOfElements(tr + " th", 4, "th"));
+
+            // check ths style
+            ths.forEach((th, index) => {
+                if (this.checkBorder(th, "all"))
+                    return wrong(this.wrongStyleMsg(tbody + ` th:nth-child(${index + 1})`, "border width or style"));
+            });
+
+            // check tr in tbody have 5
+            const trs = Array.from(document.querySelectorAll(tbody + " tr"));
+            if (trs.length < 4)
+                return wrong(this.wrongNumOfElements(tbody + " tr", 4, "tr"));
+
+            // check th in tbody trs
+            let temp = [];
+            trs.forEach((tr, index) => {
+                if (this.elementExists(tbody + ` tr:nth-child(${index + 1}) th`))
+                    temp.push(this.missingIdMsg(tbody + ` tr:nth-child(${index + 1}) th`));
+
+                // check td in tbody trs have 3
+                const tds = Array.from(tr.querySelectorAll("td"));
+                if (tds.length < 3)
+                    temp.push(this.wrongNumOfElements(tbody + ` tr:nth-child(${index + 1})`, 3, "td"));
+
+                // check td style
+                tds.forEach((td, _index) => {
+                    if (this.checkBorder(td, "all"))
+                        temp.push(this.wrongStyleMsg(tbody + ` tr:nth-child(${index + 1}) td:nth-child(${_index + 1})`, "border width or style"));
+                });
+
+            });
+            if (temp.length > 0) return wrong(temp[0]);
+
+            return correct();
         }),
     ]
 

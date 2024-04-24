@@ -65,7 +65,7 @@ nav a {
 main {
     width: 1024px;
     margin: 0 auto;
-    height: 646px;
+    /*height: 646px;*/
     background: #ffffff;
     display: flex;
     flex-direction: column;
@@ -146,6 +146,68 @@ main section:nth-child(2) {
     align-items: center;
     justify-content: center;
 }
+
+
+.section__table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.section__table h2 {
+    margin-top: 45px;
+    font-size: 2em;
+    text-align: center;
+}
+
+.section__table table {
+    margin: 45px auto 115px;
+}
+
+.section__table table th {
+    width: 120px;
+    padding: 10px;
+    border: 1px solid #B9B9B9;
+    background-color: #F5F5F5;
+    font-weight: bold;
+}
+
+.section__table table td {
+    width: 120px;
+    padding: 10px;
+    border: 1px solid #B9B9B9;
+}
+
+.section__table table thead th {
+    border-left: 1px solid #F5F5F5;
+    border-right: 1px solid #F5F5F5;
+}
+
+/* edge radius borders */
+.section__table table thead tr:first-child th:first-child, .section__table table thead tr:first-child td:first-child {
+    border-left: 1px solid #B9B9B9;
+    border-top: 1px solid #B9B9B9;
+    border-radius: 6px 0 0 0;
+}
+
+.section__table table thead tr:first-child th:last-child, .section__table table thead tr:first-child td:last-child {
+    border-top: 1px solid #B9B9B9;
+    border-right: 1px solid #B9B9B9;
+    border-radius: 0 6px 0 0;
+}
+
+.section__table table tbody tr:last-child th:last-child, .section__table table tbody tr:last-child td:last-child {
+    border-right: 1px solid #B9B9B9;
+    border-bottom: 1px solid #B9B9B9;
+    border-radius: 0 0 6px 0;
+}
+
+.section__table table tbody tr:last-child th:first-child, .section__table table tbody tr:last-child td:first-child {
+    border-bottom: 1px solid #B9B9B9;
+    border-left: 1px solid #B9B9B9;
+    border-radius: 0 0 0 6px;
+}
+
 
 footer {
     width: 1024px;
