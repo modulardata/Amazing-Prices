@@ -3,38 +3,47 @@
 
 * {
     box-sizing: border-box;
-    text-decoration: none;
+    color: #000000;
+    font-family: Inter, sans-serif;
+    font-style: normal;
+    font-size: 16px;
+    line-height: normal;
 }
 
+a {
+    color: #274867;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 body {
     height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: Inter, sans-serif;
-    font-size: 16px;
 }
 
 header {
     width: 1024px;
     margin: 0 auto;
     border-bottom: 1px solid rgba(1, 124, 255, 0.50);
-    /*padding: 0 .9em;*/
+    padding: 0 .9em;
     height: 61px;
     display: flex;
-    flex-direction: row;
-    /*flex-shrink: 0;*/
-    /*align-items: center;*/
+    flex-shrink: 0;
+    align-items: center;
     justify-content: space-between;
 }
 
+.main-header p {
+    width: 80%;
+    line-height: 1.6rem;
+}
+
 #nav-brand {
-    /*margin: 0 .9em;*/
+    margin: 0 .9em;
     color: #274867;
     font-family: Inter, serif;
     font-size: 1rem;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 800;
     line-height: normal;
 }
 
@@ -49,7 +58,7 @@ nav a {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    /*padding: .9em;*/
+    padding: .9em;
 }
 
 
@@ -57,9 +66,85 @@ main {
     width: 1024px;
     margin: 0 auto;
     height: 646px;
-    background: #abdcfe;
-    display: block;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
 
+main section {
+    display: flex;
+}
+
+
+main > section:first-child {
+    margin: 15px 0 50px 0;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* To pass the tests */
+}
+
+main section:first-child > h1 {
+    text-align: center;
+    /* To pass the tests */
+    font-size: 48px;
+    font-weight: bold;
+    margin: 10px 0 0;
+    padding-bottom: .7em;
+}
+
+main section:nth-child(2) {
+    margin: 0 0 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+.card {
+    width: 200px;
+    height: 250px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #F5F5F5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1em;
+    /* To pass the tests */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6rem;
+
+}
+
+.card-body button {
+    margin-top: .5rem;
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #274867;
+    color: #ffffff;
+    font-family: Inter, sans-serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.card-header {
+    height: 44px;
+    border-bottom: 1px solid black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 footer {
@@ -71,5 +156,7 @@ footer {
     flex-shrink: 0;
     align-items: center;
     justify-content: space-around;
-    border-top: 1px solid rgba(1, 124, 255, 0.50);
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-weight: bolder;
 }
