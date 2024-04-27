@@ -20,6 +20,7 @@ body {
     height: 100vh;
 }
 
+/* Header */
 header {
     width: 1024px;
     margin: 0 auto;
@@ -62,6 +63,7 @@ nav a {
 }
 
 
+/* Main section */
 main {
     width: 1024px;
     margin: 0 auto;
@@ -102,7 +104,7 @@ main section:nth-child(2) {
     justify-content: space-evenly;
 }
 
-
+/* Price cards */
 .card {
     width: 200px;
     height: 250px;
@@ -147,7 +149,7 @@ main section:nth-child(2) {
     justify-content: center;
 }
 
-
+/* Table */
 .section__table {
     display: flex;
     flex-direction: column;
@@ -208,7 +210,7 @@ main section:nth-child(2) {
     border-radius: 0 0 0 6px;
 }
 
-
+/* Footer */
 footer {
     width: 1024px;
     margin: 0 auto;
@@ -221,4 +223,82 @@ footer {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     font-weight: bolder;
+}
+
+
+@media screen and (max-width: 525px) {
+
+    /*main section:nth-child(2) {*/
+    /*    flex-direction: column;*/
+    /*}*/
+}
+/* Base styles are already defined above */
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    header, main, footer {
+        width: auto;
+        padding: 0 20px;
+    }
+
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    main section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%; /* Make cards full width */
+        margin-bottom: 20px; /* Add some space between cards */
+    }
+
+    main section:nth-child(2) {
+        flex-direction: column;
+    }
+
+    .section__table table, .section__table table th, .section__table table td {
+        width: auto; /* Allow table to adjust to screen size */
+    }
+
+    nav a {
+        padding: 10px; /* Reduce padding */
+    }
+
+    .main-header p, .card-body p, .section__table h2 {
+        font-size: 14px; /* Adjust font size for readability */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav {
+        flex-direction: column;
+    }
+
+    .card-body button {
+        width: auto; /* Adjust button width to fit content */
+    }
+
+    .section__table h2 {
+        font-size: 18px; /* Increase font size for visibility */
+    }
+
+    /* Adjusting footer for mobile screens */
+    footer {
+        flex-direction: column; /* Stack elements vertically */
+        padding: 10px 0; /* Add some padding */
+    }
+
+    footer a {
+        padding: 5px 0; /* Add padding to ensure links are easily tappable */
+        text-align: center; /* Center-align the text for a better visual appearance */
+    }
 }

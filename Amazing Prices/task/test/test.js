@@ -81,12 +81,13 @@ class Test extends StageTest {
                 element2 = document.body.querySelector(id2);
             }
             if (!element1 || !element2) return true;
+            // console.log(element2.nodeName);
             const top1 = element1.getBoundingClientRect()["top"]; // y
             const left1 = element1.getBoundingClientRect()["left"]; // x
             const top2 = element2.getBoundingClientRect()["top"]; // y
             const left2 = element2.getBoundingClientRect()["left"]; // x
             // console.log("x1:", left1, "y1:", top1, "x2:", left2, "y2:", top2);
-            let leftDiff = Math.abs(left2 - left1) > 15;
+            let leftDiff = Math.abs(left2 - left1) > 45;
             return leftDiff || top1 > top2;
         };
 
@@ -147,6 +148,7 @@ class Test extends StageTest {
             if (getComputedStyle(element)[this.textDec] !== "none") {
                 return this.wrongTextDecorAnchorMsg(parent);
             }
+
         }
 
         this.checkCardsStyle = (id, selector) => {
@@ -203,6 +205,9 @@ class Test extends StageTest {
         };
         this.wrongPositionCompareXMsg = (id1, id2) => {
             return `${thePage} ${theElement} ${id1} should be on the left of ${theElement} ${id2}.`;
+        };
+        this.wrongPosAnchorsXMsg = (elementOrder1, elementOrder2, parent) => {
+            return `${thePage} inside ${theElement} ${parent}, the anchor with the order of ${elementOrder1} should be on the left of the anchor with the order of ${elementOrder2}.`;
         };
         this.wrongPositionCompareYMsg = (id1, id2) => {
             return `${thePage} ${theElement} ${id1} should be above ${theElement} ${id2}.`;
@@ -378,8 +383,8 @@ class Test extends StageTest {
             });
             if (temp.length > 0) return wrong(temp[0]);
 
-            // check cards position
             const selector = (n) => `${section2} .card:nth-child(${n})`;
+            // check cards position
             for (let i = 0; i < cards.length -1; i++) {
                 if(this.elementPositionCompareX(cards[i], cards[i + 1]))
                     temp.push(this.wrongPositionCompareXMsg(selector(i + 1), selector(i + 2)));
@@ -528,6 +533,46 @@ class Test extends StageTest {
 
             });
             if (temp.length > 0) return wrong(temp[0]);
+
+            return correct();
+        }),
+        this.node.execute(async () => {
+            // test #10
+            // set viewport
+            await this.page.open()
+            await this.page.setViewport({width: 425, height: 768})
+
+            return correct()
+        }),
+        this.page.execute(() => {
+            // test #11
+            // STAGE4 RESPONSIVE
+            const mobileMsg = "For mobile screens: "
+
+            // check anchor on top of nav
+            if (this.elementPositionCompareY("#nav-brand", this.nav + " a:nth-child(2)", false))
+                return wrong(mobileMsg + this.wrongPositionCompareYMsg("#nav-brand", this.nav));
+
+            // check footer anchors position
+            const anchors = Array.from(document.querySelectorAll(this.footer + " a"));
+            let selector = (n) => this.footer + ` a:nth-child(${n})`;
+            let temp = [];
+            for (let i = 0; i < anchors.length -1; i++) {
+                if ( this.elementPositionCompareY(anchors[i], anchors[i + 1]))
+                    temp.push(this.wrongPositionCompareYMsg(selector(i + 1), selector(i + 2)));
+            }
+            if (temp.length > 0) return wrong(mobileMsg + temp[0]);
+
+            // check cards position
+            const cards = Array.from(document.querySelectorAll("main section .card"));
+            selector = (n) => `main section .card:nth-child(${n})`;
+
+            temp = [];
+            for (let i = 0; i < cards.length -1; i++) {
+                if ( this.elementPositionCompareY(cards[i], cards[i + 1]))
+                    temp.push(this.wrongPositionCompareYMsg(selector(i + 1), selector(i + 2)));
+            }
+            if (temp.length > 0) return wrong(mobileMsg + temp[0]);
 
             return correct();
         }),
